@@ -2,7 +2,7 @@
 
 /**
  * Build script for Seelen UI widgets.
- * Copies widget source files from src/ to dist/, preserving directory structure.
+ * Copies widget source files from src/ to dist/.
  *
  * Usage:
  *   deno task build       # Build all widgets
@@ -10,12 +10,12 @@
  */
 
 import { copy, ensureDir } from "https://deno.land/std@0.224.0/fs/mod.ts";
-import { join, relative } from "https://deno.land/std@0.224.0/path/mod.ts";
+import { join } from "https://deno.land/std@0.224.0/path/mod.ts";
 
 const SRC_DIR = "src";
 const DIST_DIR = "dist";
 
-// Files to copy per widget (metadata.yml + source assets)
+// File extensions to copy from src/ to dist/
 const WIDGET_EXTENSIONS = [
   ".yml",
   ".yaml",
@@ -28,41 +28,28 @@ const WIDGET_EXTENSIONS = [
   ".mjs",
 ];
 
-async function isWidgetDir(dirPath: string): Promise<boolean> {
-  try {
-    const entries = Deno.readDirSync(dirPath);
-    for (const entry of entries) {
-      if (entry.name === "metadata.yml" || entry.name === "metadata.yaml") {
-        return true;
-      }
-    }
-  } catch {
-    return false;
-  }
-  return false;
-}
+async function buildAll() {
+  console.log("Building widgets...");
 
-async function findWidgets(srcDir: string): Promise<string[]> {
-  const widgets: string[] = [];
-  for await (const entry of Deno.readDir(srcDir)) {
-    if (!entry.isDirectory) continue;
-    const widgetPath = join(srcDir, entry.name);
-    if (await isWidgetDir(widgetPath)) {
-      widgets.push(widgetPath);
+  // Check if src/ contains a metadata.yml (flat widget structure)
+  let hasMetadata = false;
+  for await (const entry of Deno.readDir(SRC_DIR)) {
+    if (entry.name === "metadata.yml" || entry.name === "metadata.yaml") {
+      hasMetadata = true;
+      break;
     }
   }
-  return widgets;
-}
 
-async function buildWidget(widgetPath: string) {
-  // Use basename to get the widget directory name regardless of OS path separator
-  const widgetName = widgetPath.split(/[\\/]/).pop()!;
-  const destDir = join(DIST_DIR, widgetName);
+  if (!hasMetadata) {
+    console.log("No widget found — src/ must contain metadata.yml");
+    return;
+  }
 
-  await ensureDir(destDir);
+  await ensureDir(DIST_DIR);
 
-  // Copy all relevant files
-  for await (const entry of Deno.readDir(widgetPath)) {
+  // Copy all relevant files from src/ to dist/
+  let count = 0;
+  for await (const entry of Deno.readDir(SRC_DIR)) {
     if (!entry.isFile) continue;
 
     const ext = entry.name.split(".").pop() || "";
@@ -70,32 +57,14 @@ async function buildWidget(widgetPath: string) {
     const isYaml = entry.name.endsWith(".yml") || entry.name.endsWith(".yaml");
 
     if (isYaml || WIDGET_EXTENSIONS.includes(fullExt)) {
-      const srcFile = join(widgetPath, entry.name);
-      const destFile = join(destDir, entry.name);
+      const srcFile = join(SRC_DIR, entry.name);
+      const destFile = join(DIST_DIR, entry.name);
       await copy(srcFile, destFile, { overwrite: true });
+      count++;
     }
   }
 
-  console.log(`  ✓ ${widgetName}`);
-}
-
-async function buildAll() {
-  console.log("Building widgets...");
-
-  const widgets = await findWidgets(SRC_DIR);
-
-  if (widgets.length === 0) {
-    console.log("No widgets found in src/");
-    return;
-  }
-
-  await ensureDir(DIST_DIR);
-
-  for (const widget of widgets) {
-    await buildWidget(widget);
-  }
-
-  console.log(`Built ${widgets.length} widget(s) → ${DIST_DIR}/`);
+  console.log(`  ✓ built ${count} file(s) → ${DIST_DIR}/`);
 }
 
 // Run
