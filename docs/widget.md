@@ -356,3 +356,9 @@ Paths are relative to the folder where `metadata.yml` lives. `.scss` and `.sass`
 6. **Load with CLI** (`seelen-ui resource load widget ./my-widget`)
 7. **Debug** with Ctrl+Shift+I in the widget webview
 8. **Add i18n** translations if desired
+
+## References
+1. [Seelen UI — Plugin Guidelines](https://github.com:wq/eythaann/Seelen-UI/blob/master/documentation/plugin_guidelines.md)
+2. [Seelen UI — Resource Guidelines](https://github.com/eythaann/Seelen-UI/blob/master/documentation/resource_guidelines.md)
+3. [Seelen UI — Theme Guidelines](https://raw.githubusercontent.com/eythaann/Seelen-UI/refs/heads/master/documentation/theme_guidelines.md)
+4. [Seelen UI — Widget Guidelines](https://raw.githubusercontent.com/eythaann/Seelen-UI/refs/heads/master/documentation/widget_guidelines.md)
