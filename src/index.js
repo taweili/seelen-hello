@@ -46,7 +46,6 @@ async function main() {
   await widget.init({
     autoSizeByContent: document.querySelector(".hw-root"),
     autoSizeFitOnScreen: true,
-    normalizeDevicePixelRatio: true,
   });
 
   await widget.ready({ show: true });
