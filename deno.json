@@ -1,6 +1,8 @@
 {
   "tasks": {
     "build": "deno run --allow-read --allow-write build.ts",
-    "dev": "deno run --allow-read --allow-write --watch build.ts"
+    "dev": "deno run --allow-read --allow-write --watch build.ts",
+    "load": "seelen-ui resource load widget ./dist",
+    "unload": "seelen-ui resource unload widget ./dist"
   }
 }
