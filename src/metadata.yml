@@ -2,7 +2,7 @@ id: "@seelen/hello-world"
 
 metadata:
   displayName: Hello World
-  description: A live-updating 12-hour clock with a hello world greeting for the desktop.
+  description: A live-updating 12-hour clock with a hello world greeting overlay.
   tags:
     - clock
     - minimal
@@ -10,7 +10,7 @@ metadata:
 
 icon: PiClockFill
 
-preset: Desktop
+preset: Overlay
 
 instances: Single
 
