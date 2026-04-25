@@ -1,8 +1,8 @@
-id: "@seelen/hello-world"
+id: "@taweili/hello-world"
 
 metadata:
-  displayName: Hello World
-  description: A live-updating 12-hour clock with a hello world greeting overlay.
+  displayName: Hello World Clock
+  description: A Hello World with Clock
   tags:
     - clock
     - minimal
@@ -14,7 +14,7 @@ preset: Overlay
 
 instances: Single
 
-lazy: false
+lazy: false 
 
 html: !include index.html
 js: !include index.js

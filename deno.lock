@@ -1,5 +1,59 @@
 {
   "version": "5",
+  "specifiers": {
+    "jsr:@seelen-ui/lib@2.5.9": "2.5.9",
+    "jsr:@std/encoding@^1.0.10": "1.0.10",
+    "npm:@tauri-apps/api@^2.10.1": "2.10.1",
+    "npm:@tauri-apps/plugin-dialog@^2.6.0": "2.7.0",
+    "npm:@tauri-apps/plugin-fs@^2.4.5": "2.5.0",
+    "npm:@tauri-apps/plugin-log@^2.8.0": "2.8.0",
+    "npm:@tauri-apps/plugin-process@^2.3.1": "2.3.1"
+  },
+  "jsr": {
+    "@seelen-ui/lib@2.5.9": {
+      "integrity": "efbc5029fe8cdd3671653d193d1bd4c603cd9813a353c0363c02c68b80135ff8",
+      "dependencies": [
+        "jsr:@std/encoding",
+        "npm:@tauri-apps/api",
+        "npm:@tauri-apps/plugin-dialog",
+        "npm:@tauri-apps/plugin-fs",
+        "npm:@tauri-apps/plugin-log",
+        "npm:@tauri-apps/plugin-process"
+      ]
+    },
+    "@std/encoding@1.0.10": {
+      "integrity": "8783c6384a2d13abd5e9e87a7ae0520a30e9f56aeeaa3bdf910a3eaaf5c811a1"
+    }
+  },
+  "npm": {
+    "@tauri-apps/api@2.10.1": {
+      "integrity": "sha512-hKL/jWf293UDSUN09rR69hrToyIXBb8CjGaWC7gfinvnQrBVvnLr08FeFi38gxtugAVyVcTa5/FD/Xnkb1siBw=="
+    },
+    "@tauri-apps/plugin-dialog@2.7.0": {
+      "integrity": "sha512-4nS/hfGMGCXiAS3LtVjH9AgsSAPJeG/7R+q8agTFqytjnMa4Zq95Bq8WzVDkckpanX+yyRHXnRtrKXkANKDHvw==",
+      "dependencies": [
+        "@tauri-apps/api"
+      ]
+    },
+    "@tauri-apps/plugin-fs@2.5.0": {
+      "integrity": "sha512-c83kbz61AK+rKjhS+je9+stIO27nXj7p9cqeg36TwkIUtxpCFTttlHHtqon6h6FN54cXjyAjlMPOJcW3mwE5XQ==",
+      "dependencies": [
+        "@tauri-apps/api"
+      ]
+    },
+    "@tauri-apps/plugin-log@2.8.0": {
+      "integrity": "sha512-a+7rOq3MJwpTOLLKbL8d0qGZ85hgHw5pNOWusA9o3cf7cEgtYHiGY/+O8fj8MvywQIGqFv0da2bYQDlrqLE7rw==",
+      "dependencies": [
+        "@tauri-apps/api"
+      ]
+    },
+    "@tauri-apps/plugin-process@2.3.1": {
+      "integrity": "sha512-nCa4fGVaDL/B9ai03VyPOjfAHRHSBz5v6F/ObsB73r/dA3MHHhZtldaDMIc0V/pnUw9ehzr2iEG+XkSEyC0JJA==",
+      "dependencies": [
+        "@tauri-apps/api"
+      ]
+    }
+  },
   "remote": {
     "https://deno.land/std@0.224.0/assert/assert.ts": "09d30564c09de846855b7b071e62b5974b001bb72a4b797958fe0660e7849834",
     "https://deno.land/std@0.224.0/assert/assertion_error.ts": "ba8752bd27ebc51f723702fac2f54d3e94447598f54264a6653d6413738a8917",
@@ -96,6 +150,15 @@
     "https://deno.land/std@0.224.0/path/windows/relative.ts": "3e1abc7977ee6cc0db2730d1f9cb38be87b0ce4806759d271a70e4997fc638d7",
     "https://deno.land/std@0.224.0/path/windows/resolve.ts": "8dae1dadfed9d46ff46cc337c9525c0c7d959fb400a6308f34595c45bdca1972",
     "https://deno.land/std@0.224.0/path/windows/to_file_url.ts": "40e560ee4854fe5a3d4d12976cef2f4e8914125c81b11f1108e127934ced502e",
-    "https://deno.land/std@0.224.0/path/windows/to_namespaced_path.ts": "4ffa4fb6fae321448d5fe810b3ca741d84df4d7897e61ee29be961a6aac89a4c"
+    "https://deno.land/std@0.224.0/path/windows/to_namespaced_path.ts": "4ffa4fb6fae321448d5fe810b3ca741d84df4d7897e61ee29be961a6aac89a4c",
+    "https://esm.sh/esbuild-wasm@0.24.0": "7f883fe78041db24669a2f04cf7a38a82aa1e636071af9b26ad0e36085bb4de1",
+    "https://esm.sh/esbuild-wasm@0.24.0/denonext/esbuild-wasm.mjs": "9e641809d2ececcdc294c77ff3c6d4bd35a127ae04c7b138fd7f413063f6d606",
+    "https://esm.sh/esbuild@0.24.0": "d54cb7feb94d73d55f2d524164495786f9e5c83d3a9db3e1c14bfb39dd3d0f16",
+    "https://esm.sh/esbuild@0.24.0/denonext/esbuild.mjs": "4cd944b56ff149df9077d23028660e9dec18071b0cabc3ed6cac098913aba024"
+  },
+  "workspace": {
+    "dependencies": [
+      "jsr:@seelen-ui/lib@2.5.9"
+    ]
   }
 }

@@ -1,8 +1,8 @@
-#!/usr/bin/env -S deno run --allow-read --allow-write
+#!/usr/bin/env -S deno run --allow-read --allow-write --allow-run
 
 /**
  * Build script for Seelen UI widgets.
- * Copies widget source files from src/ to dist/.
+ * Bundles JS with esbuild (via npx), copies other assets from src/ to dist/.
  *
  * Usage:
  *   deno task build       # Build all widgets
@@ -15,17 +15,14 @@ import { join } from "https://deno.land/std@0.224.0/path/mod.ts";
 const SRC_DIR = "src";
 const DIST_DIR = "dist";
 
-// File extensions to copy from src/ to dist/
-const WIDGET_EXTENSIONS = [
+// File extensions to copy from src/ to dist/ (non-JS assets)
+const ASSET_EXTENSIONS = [
   ".yml",
   ".yaml",
   ".html",
   ".css",
   ".scss",
   ".sass",
-  ".js",
-  ".ts",
-  ".mjs",
 ];
 
 async function buildAll() {
@@ -47,8 +44,8 @@ async function buildAll() {
 
   await ensureDir(DIST_DIR);
 
-  // Copy all relevant files from src/ to dist/
-  let count = 0;
+  // Copy all non-JS assets from src/ to dist/
+  let copyCount = 0;
   for await (const entry of Deno.readDir(SRC_DIR)) {
     if (!entry.isFile) continue;
 
@@ -56,15 +53,38 @@ async function buildAll() {
     const fullExt = `.${ext}`;
     const isYaml = entry.name.endsWith(".yml") || entry.name.endsWith(".yaml");
 
-    if (isYaml || WIDGET_EXTENSIONS.includes(fullExt)) {
+    if (isYaml || ASSET_EXTENSIONS.includes(fullExt)) {
       const srcFile = join(SRC_DIR, entry.name);
       const destFile = join(DIST_DIR, entry.name);
       await copy(srcFile, destFile, { overwrite: true });
-      count++;
+      copyCount++;
     }
   }
 
-  console.log(`  ✓ built ${count} file(s) → ${DIST_DIR}/`);
+  // Bundle JS with esbuild (resolves @seelen-ui/lib imports)
+  const cmd = [
+    "npx",
+    "esbuild",
+    join(SRC_DIR, "index.js"),
+    "--bundle",
+    `--outfile=${join(DIST_DIR, "index.js")}`,
+    "--target=chrome100",
+    "--format=iife",
+  ];
+
+  const proc = new Deno.Command(cmd[0], {
+    args: cmd.slice(1),
+    stdout: "inherit",
+    stderr: "inherit",
+  });
+
+  const { success } = await proc.output();
+  if (!success) {
+    console.error("  ✗ esbuild failed");
+    Deno.exit(1);
+  }
+
+  console.log(`  ✓ built ${copyCount} asset(s) + bundled JS → ${DIST_DIR}/`);
 }
 
 // Run
