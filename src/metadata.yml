@@ -20,4 +20,8 @@ html: !include index.html
 js: !include index.js
 css: !include index.css
 
-settings: []
+settings:
+  - type: color
+    key: background-color
+    label: Background color
+    defaultValue: "#ffe600"

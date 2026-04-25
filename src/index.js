@@ -32,6 +32,17 @@ setInterval(updateClock, 1000);
 async function main() {
   const widget = Widget.getCurrent();
 
+  // Read widget settings and apply background color
+  const { Settings } = await import("@seelen-ui/lib");
+  const settings = await Settings.getAsync();
+  const widgetConfig = settings.getCurrentWidgetConfig();
+  const bgColor = widgetConfig["background-color"] || "#ffe600";
+
+  const rootEl = document.querySelector(".hw-root");
+  if (rootEl) {
+    rootEl.style.background = bgColor;
+  }
+
   await widget.init({
     autoSizeByContent: document.querySelector(".hw-root"),
     autoSizeFitOnScreen: true,
